@@ -35,12 +35,12 @@ public class FappyBird implements ApplicationListener {
 	public void create() {
 		batch = new SpriteBatch();
         drawables = new ArrayList<Drawable>();
+        bird = new Bird(Gdx.files.internal(IMAGE_BIRD));
+
         drawables.add(new Background(Gdx.files.internal(IMAGE_BACKGROUND), 80));
         drawables.add(new PipeFactory(Gdx.files.internal(IMAGE_PIPE), Gdx.files.internal(IMAGE_PIPE_TOP)));
-        drawables.add(new Background(Gdx.files.internal(IMAGE_FLOOR), 200));
-
-        bird = new Bird(Gdx.files.internal(IMAGE_BIRD));
         drawables.add(bird);
+        drawables.add(new Background(Gdx.files.internal(IMAGE_FLOOR), 200));
 	}
 
 	@Override
@@ -77,15 +77,6 @@ public class FappyBird implements ApplicationListener {
             drawable.draw(batch);
         }
         batch.end();
-
-//        ShapeRenderer shapeRenderer = new ShapeRenderer();
-//        shapeRenderer.setProjectionMatrix(camera.combined);
-//        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-//        shapeRenderer.setColor(0, 1, 1, 1);
-//        Rectangle rectangle = bird.getRectangle();
-//        shapeRenderer.rect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
-//        shapeRenderer.end();
-
     }
 
 	@Override
