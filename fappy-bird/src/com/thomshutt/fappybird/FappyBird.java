@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.thomshutt.fappybird.drawable.Background;
 import com.thomshutt.fappybird.drawable.Bird;
 import com.thomshutt.fappybird.drawable.PipeFactory;
@@ -75,6 +77,15 @@ public class FappyBird implements ApplicationListener {
             drawable.draw(batch);
         }
         batch.end();
+
+//        ShapeRenderer shapeRenderer = new ShapeRenderer();
+//        shapeRenderer.setProjectionMatrix(camera.combined);
+//        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+//        shapeRenderer.setColor(0, 1, 1, 1);
+//        Rectangle rectangle = bird.getRectangle();
+//        shapeRenderer.rect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
+//        shapeRenderer.end();
+
     }
 
 	@Override

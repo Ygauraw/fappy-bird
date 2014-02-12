@@ -46,7 +46,7 @@ public class Background implements Drawable {
         this.backgroundY = 0 - (this.canvasHeight / 2);
         this.textureScale = this.canvasHeight / this.textureBackground.getHeight() ;
         this.textureWidthScaled = this.textureBackground.getWidth() * textureScale;
-        this.floorHeight = -((this.canvasHeight / 10) * 2.8f);
+        this.floorHeight = -((this.canvasHeight / 10) * 3.3f);
     }
 
     @Override

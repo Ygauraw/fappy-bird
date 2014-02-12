@@ -3,6 +3,8 @@ package com.thomshutt.fappybird.drawable;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.thomshutt.fappybird.Drawable;
 
 import java.util.ArrayList;
@@ -25,11 +27,11 @@ public class PipeFactory implements Drawable {
     public PipeFactory(FileHandle imageBottom, FileHandle imageTop) {
         this.texturePipe = new Texture(imageBottom);
         this.texturePipeTop = new Texture(imageTop);
-        this.pipes.add(new Pipe(1500, -250));
+        this.pipes.add(new Pipe(2700, -300));
+        this.pipes.add(new Pipe(2300, -260));
+        this.pipes.add(new Pipe(1900, -220));
+        this.pipes.add(new Pipe(1500, -260));
         this.pipes.add(new Pipe(1100, -230));
-        this.pipes.add(new Pipe(800, -210));
-        this.pipes.add(new Pipe(400, -250));
-        this.pipes.add(new Pipe(100, -250));
     }
 
     @Override
@@ -54,7 +56,7 @@ public class PipeFactory implements Drawable {
         this.pipeWidth = this.screenHeight / 10;
         this.textureScale = this.pipeWidth / this.texturePipe.getWidth() ;
         this.pipeHeight = this.texturePipe.getHeight() * textureScale;
-        this.pipeGap = (this.screenHeight / 10) * 2;
+        this.pipeGap = (this.screenHeight / 10) * 4;
     }
 
     @Override
@@ -64,6 +66,9 @@ public class PipeFactory implements Drawable {
 
     @Override
     public boolean isInCollisionWithBird(Bird bird) {
+        for (Pipe pipe : pipes) {
+            if(Intersector.intersectRectangles(bird.getRectangle(), pipe.getRectangle(pipeWidth, pipeHeight), new Rectangle())) return true;
+        }
         return false;
     }
 
@@ -76,6 +81,9 @@ public class PipeFactory implements Drawable {
             this.y = y;
         }
 
+        public Rectangle getRectangle(float pipeWidth, float pipeHeight) {
+            return new Rectangle(this.x, this.y, pipeWidth, pipeHeight);
+        }
     }
 
 }

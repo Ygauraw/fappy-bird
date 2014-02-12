@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.thomshutt.fappybird.Drawable;
 
 public class Bird implements Drawable {
@@ -16,6 +17,9 @@ public class Bird implements Drawable {
 
     private Texture textureBird;
     private Sprite spriteBird;
+    private float x;
+    private float birdHeight;
+    private float birdWidth;
 
     public Bird(FileHandle image) {
         textureBird = new Texture(image);
@@ -36,14 +40,17 @@ public class Bird implements Drawable {
 
     @Override
     public void draw(SpriteBatch batch) {
-        spriteBird.setPosition(-spriteBird.getWidth()/2, -spriteBird.getHeight()/2 + this.y);
+        spriteBird.setPosition(this.x, this.y);
         spriteBird.setRotation(getTiltDegrees());
         spriteBird.draw(batch);
     }
 
     @Override
     public void resize(int width, int height) {
-        spriteBird.setSize(height / 10, height / 10);
+        this.birdWidth = height / 10f;
+        this.birdHeight = height / 10f;
+        this.x = -(width / 4);
+        spriteBird.setSize(birdWidth, birdHeight);
         spriteBird.setOrigin(spriteBird.getWidth() / 2, spriteBird.getHeight() / 2);
     }
 
@@ -61,4 +68,13 @@ public class Bird implements Drawable {
     public float getY() {
         return y;
     }
+
+    public float getX() {
+        return x;
+    }
+
+    public Rectangle getRectangle(){
+        return new Rectangle(this.x, this.y, this.birdWidth, this.birdHeight);
+    }
+
 }
