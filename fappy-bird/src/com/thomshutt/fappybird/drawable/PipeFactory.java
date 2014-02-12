@@ -103,15 +103,6 @@ public class PipeFactory implements Drawable {
         public boolean hasMovedOffScreen(float screenWidth) {
             return this.x < -screenWidth;
         }
-
-        @Override
-        public String toString() {
-            return "Pipe{" +
-                    "x=" + x +
-                    ", y=" + y +
-                    '}';
-        }
-
     }
 
 }
