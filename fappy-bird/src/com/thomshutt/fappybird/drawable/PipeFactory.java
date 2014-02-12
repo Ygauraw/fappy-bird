@@ -9,8 +9,14 @@ import com.thomshutt.fappybird.Drawable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PipeFactory implements Drawable {
+
+    private static final int PIPE_INTERVAL_PIXELS = 400;
+    private static final int MIN_PIPES_IN_MEMORY = 5;
+    private static final int MIN_PIPE_Y = 200;
+    private static final int MAX_PIPE_Y = 380;
 
     private final Texture texturePipe;
     private final Texture texturePipeTop;
@@ -19,19 +25,22 @@ public class PipeFactory implements Drawable {
     private float screenHeight;
     private float pipeWidth;
     private float textureScale;
-    private float pipeHeight;
 
+    private float pipeHeight;
     private List<Pipe> pipes = new ArrayList<Pipe>();
+
     private float pipeGap = 0;
+
+    private final Random random = new Random(System.currentTimeMillis());
 
     public PipeFactory(FileHandle imageBottom, FileHandle imageTop) {
         this.texturePipe = new Texture(imageBottom);
         this.texturePipeTop = new Texture(imageTop);
-        this.pipes.add(new Pipe(2700, -300));
-        this.pipes.add(new Pipe(2300, -260));
-        this.pipes.add(new Pipe(1900, -220));
-        this.pipes.add(new Pipe(1500, -260));
-        this.pipes.add(new Pipe(1100, -230));
+        this.pipes.add(new Pipe(2 * PIPE_INTERVAL_PIXELS, generatePipeY()));
+    }
+
+    private int generatePipeY(){
+        return -(this.random.nextInt(MAX_PIPE_Y - MIN_PIPE_Y) + MIN_PIPE_Y);
     }
 
     @Override
@@ -39,11 +48,17 @@ public class PipeFactory implements Drawable {
         for (Pipe pipe : pipes) {
             pipe.x -= 200f * deltaTime;
         }
+        while(this.pipes.size() > 0 && this.pipes.get(0).hasMovedOffScreen(this.screenWidth)){
+            this.pipes.remove(0);
+        }
+        while(this.pipes.size() < MIN_PIPES_IN_MEMORY){
+            this.pipes.add(new Pipe(this.pipes.get(this.pipes.size() - 1).x + PIPE_INTERVAL_PIXELS, generatePipeY()));
+        }
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        for (Pipe pipe : pipes) {
+        for (Pipe pipe : this.pipes) {
             batch.draw(this.texturePipe, pipe.x, pipe.y, pipeWidth, pipeHeight);
             batch.draw(this.texturePipeTop, pipe.x, pipe.y + this.pipeHeight + pipeGap, pipeWidth, pipeHeight);
         }
@@ -84,6 +99,19 @@ public class PipeFactory implements Drawable {
         public Rectangle getRectangle(float pipeWidth, float pipeHeight) {
             return new Rectangle(this.x, this.y, pipeWidth, pipeHeight);
         }
+
+        public boolean hasMovedOffScreen(float screenWidth) {
+            return this.x < -screenWidth;
+        }
+
+        @Override
+        public String toString() {
+            return "Pipe{" +
+                    "x=" + x +
+                    ", y=" + y +
+                    '}';
+        }
+
     }
 
 }
