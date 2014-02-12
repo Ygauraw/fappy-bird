@@ -61,7 +61,7 @@ public class Bird implements Drawable {
 
     private float getTiltDegrees() {
         if(this.velocityY < 0) return 25;
-        if(this.velocityY > 0) return Math.max(-80, -this.velocityY);
+        if(this.velocityY > 0) return Math.max(-85, -(this.velocityY * 3f));
         return 0;
     }
 

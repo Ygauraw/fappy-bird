@@ -16,7 +16,7 @@ public class PipeFactory implements Drawable {
     private static final int PIPE_INTERVAL_PIXELS = 400;
     private static final int MIN_PIPES_IN_MEMORY = 5;
     private static final int MIN_PIPE_Y = 200;
-    private static final int MAX_PIPE_Y = 380;
+    private static final int MAX_PIPE_Y = 360;
 
     private final Texture texturePipe;
     private final Texture texturePipeTop;
@@ -71,7 +71,7 @@ public class PipeFactory implements Drawable {
         this.pipeWidth = this.screenHeight / 10;
         this.textureScale = this.pipeWidth / this.texturePipe.getWidth() ;
         this.pipeHeight = this.texturePipe.getHeight() * textureScale;
-        this.pipeGap = (this.screenHeight / 10) * 4;
+        this.pipeGap = (this.screenHeight / 10) * 3;
     }
 
     @Override
