@@ -2,6 +2,7 @@ package com.thomshutt.fappybird;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -63,7 +64,7 @@ public class FappyBird implements ApplicationListener {
 
     private void doUpdate(){
         if(this.state == STATES.LOST){
-            if(Gdx.input.justTouched()){
+            if(inputTouched()){
                 this.create();
                 this.resize(this.width, this.height);
                 this.state = STATES.RUNNING;
@@ -75,7 +76,7 @@ public class FappyBird implements ApplicationListener {
         } else {
             for (Drawable drawable : drawables) {
                 drawable.tick(Gdx.graphics.getDeltaTime());
-                if(Gdx.input.justTouched()) { drawable.screenTouched(); }
+                if(inputTouched()) { drawable.screenTouched(); }
                 if(drawable.isInCollisionWithBird(bird)){
                     this.state = STATES.DEATH_THROES;
                 }
@@ -113,5 +114,11 @@ public class FappyBird implements ApplicationListener {
 
 	@Override
 	public void resume() {}
+
+    private boolean inputTouched(){
+        return Gdx.input.justTouched()
+                || Gdx.input.isKeyPressed(Input.Keys.SPACE)
+                || Gdx.input.isKeyPressed(Input.Keys.UP);
+    }
 
 }

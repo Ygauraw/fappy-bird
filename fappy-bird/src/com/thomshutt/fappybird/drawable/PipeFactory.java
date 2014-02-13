@@ -16,7 +16,7 @@ public class PipeFactory implements Drawable {
     private static final int PIPE_INTERVAL_PIXELS = 400;
     private static final int MIN_PIPES_IN_MEMORY = 5;
     private static final int MIN_PIPE_Y = 200;
-    private static final int MAX_PIPE_Y = 360;
+    private static final int MAX_PIPE_Y = 350;
 
     private final Texture texturePipe;
     private final Texture texturePipeTop;
@@ -82,7 +82,8 @@ public class PipeFactory implements Drawable {
     @Override
     public boolean isInCollisionWithBird(Bird bird) {
         for (Pipe pipe : pipes) {
-            if(Intersector.intersectRectangles(bird.getRectangle(), pipe.getRectangle(pipeWidth, pipeHeight), new Rectangle())) return true;
+            if(Intersector.intersectRectangles(bird.getRectangle(), pipe.getBottomRectangle(pipeWidth, pipeHeight), new Rectangle())) return true;
+            if(Intersector.intersectRectangles(bird.getRectangle(), pipe.getTopRectangle(pipeWidth, pipeHeight, pipeGap), new Rectangle())) return true;
         }
         return false;
     }
@@ -96,8 +97,12 @@ public class PipeFactory implements Drawable {
             this.y = y;
         }
 
-        public Rectangle getRectangle(float pipeWidth, float pipeHeight) {
+        public Rectangle getBottomRectangle(float pipeWidth, float pipeHeight) {
             return new Rectangle(this.x, this.y, pipeWidth, pipeHeight);
+        }
+
+        public Rectangle getTopRectangle(float pipeWidth, float pipeHeight, float pipeGap) {
+            return new Rectangle(this.x, this.y + pipeGap + pipeHeight, pipeWidth, pipeHeight);
         }
 
         public boolean hasMovedOffScreen(float screenWidth) {
